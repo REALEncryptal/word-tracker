@@ -1,0 +1,23 @@
+/* Editor.module.css */
+.tablesContainer {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.tablePaper {
+    flex: 2;
+    min-width: 300px; /* Ensures a minimum width for each table */
+}
+
+.tableHeader, .tableCell {
+    width: 50%; /* Ensures consistent width for each column */
+    text-align: left; /* Align text to the left for better readability */
+}
+
+@media (max-width: 768px) {
+    .tablesContainer {
+        flex-direction: column;
+    }
+}
