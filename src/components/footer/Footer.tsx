@@ -55,7 +55,7 @@ export function Footer() {
 
         <Group gap={0} className={classes.social} justify="flex-end" wrap="nowrap">
           <ActionIcon size="lg" color="gray" variant="subtle">
-            <IconBrandGithub size={18} stroke={1.5} onClick={() => window.open('https://github.com/REALEncryptal/', '_blank')}/>
+            <IconBrandGithub size={18} stroke={1.5} onClick={() => window.open('https://github.com/REALEncryptal/word-tracker/', '_blank')}/>
           </ActionIcon>
         </Group>
       </Container>
