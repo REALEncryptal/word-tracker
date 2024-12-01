@@ -3,7 +3,7 @@ import { Header } from '../../components/header/Header';
 import { Footer } from '../../components/footer/Footer';
 import { Editor } from '../../components/editor/Editor';
 import { Features } from '../../components/features/Features';
-import { Faq } from '../../components/faq/FAQ';
+import { Faq } from '../../components/faq/Faq';
 
 import classes from './Home.module.css'
 

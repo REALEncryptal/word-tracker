@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { RichTextEditor, Link, getTaskListExtension } from '@mantine/tiptap';
-import { Container, Paper, Table, Button, Stack, Text, Title, Grid, useMantineTheme } from '@mantine/core';
+import { Container, Paper, Table, Button, Stack, Text, Title, Grid } from '@mantine/core';
 import { IconLetterCaseLower, IconLetterCaseUpper, IconLetterCaseToggle } from '@tabler/icons-react';
 import Highlight from '@tiptap/extension-highlight';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
-import { useEditor } from '@tiptap/react';
+import { useEditor, Editor as TipTapEditor } from '@tiptap/react';
 import Placeholder from '@tiptap/extension-placeholder';
 import TaskItem from '@tiptap/extension-task-item';
 import TipTapTaskList from '@tiptap/extension-task-list';
@@ -65,7 +65,6 @@ const StatisticRow = ({ label, value, color }: { label: string, value: string | 
 );
 
 export function Editor() {
-    const theme = useMantineTheme();
 
     const [wordCount, setWordCount] = useState(0);
     const [charCount, setCharCount] = useState(0);
@@ -73,9 +72,7 @@ export function Editor() {
     const [sentenceCount, setSentenceCount] = useState(0);
     const [paragraphCount, setParagraphCount] = useState(0);
     const [phraseLength, setPhraseLength] = useState(1);
-    const [readingLevel, setReadingLevel] = useState(0);
     const [readingLevelDescription, setReadingLevelDescription] = useState('');
-    const [speakingTime, setSpeakingTime] = useState(0);
 
     const calculateReadingTime = (wordCount: number) => {
         const wordsPerMinute = 200;
@@ -106,7 +103,7 @@ export function Editor() {
         const words = text.split(/\s+/).filter(Boolean);
         const syllableCount = words.reduce((total, word) => total + countSyllables(word), 0);
         const readingLevel = 0.39 * (wordCount / sentenceCount) + 11.8 * (syllableCount / wordCount) - 15.59;
-        return Math.max(0, readingLevel.toFixed(1));
+        return Math.max(0, parseFloat(readingLevel.toFixed(1)));
     };
 
     const getReadingLevelDescription = (level: number) => {
@@ -119,7 +116,7 @@ export function Editor() {
         return 'Postgraduate';
     };
 
-    const updateStatistics = (editor) => {
+    const updateStatistics = (editor: TipTapEditor) => {
         const text = editor.getText();
         const words = text.toLowerCase().match(/\b\w+\b/g) || [];
         const totalWords = words.length;
@@ -137,11 +134,7 @@ export function Editor() {
 
         // Calculate and set reading level
         const level = calculateReadingLevel(text, totalWords, sentences.length);
-        setReadingLevel(level);
         setReadingLevelDescription(getReadingLevelDescription(level));
-
-        // Calculate and set speaking time
-        setSpeakingTime(calculateSpeakingTime(totalWords));
     };
 
     const editor = useEditor({
